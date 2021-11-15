@@ -8,8 +8,10 @@ const app = express()
 
 app.use(express.json());
 app.post('/', async (req, res) => {
-    const {description, question, answer_1, answer_2, answer_3, illustration} =req.body
-    const gameMove = await GameMove.create({description, question, answer_1, answer_2, answer_3, illustration})
+    const {description, question, answer_1, answer_2, answer_3,
+        score_for_answer_1, score_for_answer_2, score_for_answer_3, illustration} =req.body
+    const gameMove = await GameMove.create({description, question, answer_1, answer_2, answer_3,
+        score_for_answer_1, score_for_answer_2, score_for_answer_3, illustration})
     res.json(gameMove)
 })
 
