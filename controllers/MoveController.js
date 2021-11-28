@@ -26,7 +26,7 @@ class MoveController{
 
     async getOne(req, res){
         const {id} = req.params
-        const move = await Move.findOne({where: {id}})  // Доделать
+        const move = await Move.findOne({where: {id}})
         return res.json(move)
     }
 }

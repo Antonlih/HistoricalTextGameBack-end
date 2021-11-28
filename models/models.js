@@ -28,14 +28,10 @@ const Action = sequelize.define('action', {
     score: {type: DataTypes.INTEGER},
 })
 
-const Dictionary = sequelize.define('dictionary', {
+const Term = sequelize.define('term', {
     id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
     term: {type: DataTypes.STRING},
-})
-
-const Term = sequelize.define('terms', {
-    id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
-    meaning: {type: DataTypes.STRING},
+    meaning: {type: DataTypes.STRING}
 })
 
 User.hasOne(UserProgress)
@@ -44,14 +40,10 @@ User.belongsTo(User)
 Move.hasMany(Action)
 Action.belongsTo(Move)
 
-Dictionary.hasMany(Term)
-Term.belongsTo(Dictionary)
-
 module.exports = {
     User,
     UserProgress,
     Move,
     Action,
-    Dictionary,
     Term
 }

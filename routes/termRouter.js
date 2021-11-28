@@ -1,10 +1,12 @@
 const Router = require('express')
 const router = new Router()
-const TermController = require('../controllers/termController')
+const termController = require('../controllers/termController')
+const checkRole = require("../middleware/checkRoleMiddleware");
 
-router.post('/' ,TermController.create)
-router.get('/', TermController.getAll)
-router.get('/:id', TermController.getOne)
+router.post('/',checkRole('ADMIN'),termController.create)
+router.get('/', termController.getAll)
+router.get('/:id', termController.getOne)
+router.delete('/:id', termController.delete)
 
 
 module.exports = router
