@@ -1,22 +1,34 @@
-import express from 'express'
-import mongoose from 'mongoose'
-import router from './Router.js';
+require('dotenv').config()
+const express = require('express')
+const sequelize = require('./db')
+const models = require('./models/models')
+const cors = require('cors')
+const fileUpload = require('express-fileupload')
+const router = require('./routes/index')
+const errorHandler = require('./middleware/ErrorHandingMiddleware')
+const path = require('path')
 
+const PORT = process.env.PORT || 5000
 
-const Port = 5000;
-const DataBase_URL = 'mongodb+srv://User:user@historycaltextgame.3mzih.mongodb.net/HistorycalTextGame?retryWrites=true&w=majority'
 const app = express()
 
-app.use(express.json());
+app.use(cors())
+app.use(express.json())
+app.use(express.static(path.resolve(__dirname, 'static')))
+app.use(fileUpload({}))
 app.use('/api', router)
+app.use(errorHandler)
 
-async function startApp() {
-    try {
-        await mongoose.connect(DataBase_URL)
-        app.listen(Port, () => console.log('Server working on port ' + Port))
+
+
+const start = async () => {
+    try{
+        await sequelize.authenticate()
+        await sequelize.sync()
+        app.listen(PORT, () => console.log(`Server started on port ${PORT}`))
     } catch (e) {
         console.log(e)
     }
 }
 
-startApp()
+start()
