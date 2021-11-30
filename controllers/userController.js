@@ -33,8 +33,8 @@ class UserController{
         if (!user) {
             return next(ApiError.internal('Пользователь не найден'))
         }
-        let comparePasword = bcrypt.compareSync(password, user.password)
-        if (!comparePasword) {
+        let comparePassword = bcrypt.compareSync(password, user.password)
+        if (!comparePassword) {
             return next(ApiError.internal('Указан неверный пароль'))
         }
         const token = generateJwt(user.id, user.email, user.role)

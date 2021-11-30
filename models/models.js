@@ -11,21 +11,29 @@ const User = sequelize.define('user', {
 const UserProgress = sequelize.define('userProgress', {
     id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
     scores: {type: DataTypes.INTEGER},
-    lastMove: {type: DataTypes.INTEGER},
+    lastPage: {type: DataTypes.INTEGER},
 })
 
-const Move = sequelize.define('move', {
+const Page = sequelize.define('page', {
     id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
     description: {type: DataTypes.STRING, allowNull: false},
-    action: {type: DataTypes.INTEGER, allowNull: false},
     image: {type: DataTypes.STRING, allowNull: false},
-    term: {type: DataTypes.STRING},
+    imageDescription: {type: DataTypes.STRING},
 })
 
 const Action = sequelize.define('action', {
     id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
     option: {type: DataTypes.STRING},
     score: {type: DataTypes.INTEGER},
+
+})
+
+const Effect = sequelize.define('effect', {
+    id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
+    effect: {type: DataTypes.STRING},
+    effectImage: {type: DataTypes.STRING},
+    imageDescription: {type: DataTypes.STRING},
+    endGame: {type: DataTypes.STRING}  // 0 или 1
 })
 
 const Term = sequelize.define('term', {
@@ -35,15 +43,18 @@ const Term = sequelize.define('term', {
 })
 
 User.hasOne(UserProgress)
-User.belongsTo(User)
+UserProgress.belongsTo(User)
 
-Move.hasMany(Action)
-Action.belongsTo(Move)
+Action.hasOne(Effect)
+Effect.belongsTo(Action)
+
+Page.hasMany(Action)
+Action.belongsTo(Page)
 
 module.exports = {
     User,
     UserProgress,
-    Move,
+    Page,
     Action,
     Term
 }
