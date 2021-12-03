@@ -33,13 +33,23 @@ const Effect = sequelize.define('effect', {
     effect: {type: DataTypes.STRING},
     effectImage: {type: DataTypes.STRING},
     imageDescription: {type: DataTypes.STRING},
-    endGame: {type: DataTypes.STRING}  // 0 или 1
+    endGame: {type: DataTypes.STRING} // 0 или 1
 })
 
 const Term = sequelize.define('term', {
     id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
     term: {type: DataTypes.STRING},
     meaning: {type: DataTypes.STRING}
+})
+
+const Font = sequelize.define('font', {
+    id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
+    font: {type: DataTypes.STRING}
+})
+
+const Style = sequelize.define('style', {
+    id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
+    style: {type: DataTypes.STRING}
 })
 
 User.hasOne(UserProgress)
@@ -55,6 +65,9 @@ module.exports = {
     User,
     UserProgress,
     Page,
+    Font,
+    Style,
+    Effect,
     Action,
     Term
 }

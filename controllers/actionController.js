@@ -2,9 +2,9 @@ const {Action} = require("../models/models");
 
 class ActionController {
     async create(req, res) {
-        const {option, score, effect, endGame, pageId} = req.body
-        const object = await Action.create({option,score, effect, endGame, pageId})
-        return res.json(object)
+        const {option, score, pageId} = req.body
+        const action = await Action.create({option, score, pageId})
+        return res.json(action)
     }
 
     async getAll(req, res) {
@@ -24,6 +24,22 @@ class ActionController {
         return res.json(action)
     }
 
+    async delete(req, res) {
+        try {
+            const {id} = req.params
+            if (!id) {
+                return res.json({message: "Не указан id"})
+            }
+            const page = await Action.findOne({where: {id}})
+            if (page === null){
+                return res.json({message: "Указан несуществующий id"})
+            }
+            await Action.destroy({where: {id}})
+            return res.json({message: "Действие удалено"})
+        } catch (e) {
+            res.status(500).json(e)
+        }
+    }
 }
 
 
