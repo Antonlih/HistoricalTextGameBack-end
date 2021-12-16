@@ -8,9 +8,8 @@ const router = require('./routes/index')
 const errorHandler = require('./middleware/ErrorHandingMiddleware')
 const path = require('path')
 
-const PORT = process.env.PORT || 5000
+const PORT = process.env.PORT || 80
 
-const IP = process.env.IP
 
 const app = express()
 
@@ -30,7 +29,7 @@ const start = async () => {
     try{
         await sequelize.authenticate()
         await sequelize.sync()
-        app.listen(PORT, IP, () => console.log(`Server started on port ${PORT}, IP:${IP}`))
+        app.listen(PORT, () => console.log(`Server started on port ${PORT}`)) //IP:${IP}`))
     } catch (e) {
         console.log(e)
     }
